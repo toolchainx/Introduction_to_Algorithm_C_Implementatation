@@ -1,0 +1,10 @@
+socks		0
+undershorts	1
+pants		2
+shoes		3
+watch		4
+shirt		5
+belt		6
+tie 		7 
+jacket		8
+	

@@ -1,0 +1,31 @@
+int chessboard[8][8]
+enum {SET, UNSET, CNTSET}posStat;
+struct pos_t
+{
+    unsigned int row;
+    unsigned int col;
+}pos, curpos;
+// 不用tag参数，直接查找对比冲突的queen，利用find()函数
+void find(pos_t)
+{
+
+}
+eight_queen(int start, int end)
+if 第i列可放置 && i >=0 && i < end + 1
+    if i == end
+       输出一个结果
+       放置当前位置的下一位位置，设置待放置标志
+       eight_queen(i, end);
+    设置放置标志，记住当前放置的位置
+    设置不可放置标志
+    eight_queen(i+1, end)
+else
+    放置当前位置的下一个位置，设置待放置标志
+    eight_queen(i, end)
+第i列可放置？ 
+    遍历第i列查看标志位
+
+
+假设前7列已放好，查找第8列的位置
+假设前n-1列已放好，查找第n列的位置
+unsigned int find(int chess[8], int n);
