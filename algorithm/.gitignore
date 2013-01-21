@@ -1,3 +1,4 @@
 #ignore the .d .o .exe files
 *.[do]
 *.exe
+*.gdb_history
