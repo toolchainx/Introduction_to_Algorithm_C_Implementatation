@@ -1,11 +1,11 @@
 # 包含算法导论第二版伪代码的C语言实现
 
 ## 说明一
-每个算法包含4个文件，即XXX.h XXX.c XXX.mk XXX_test.c 文件，XXX为算法的名称，XXX_test.c 为测试算法有效性的文件，即main函数所在的文件。makefile为gnu make。使用auto-c-files.el(Emacs-Lisp代码)来生成这4个文件并载入相应的模板。auto_make_template.mk为makefile的模板。
+每个算法包含4个文件，即`XXX.h` `XXX.c` `XXX.mk` `XXX_test.c` 文件，`XXX`为算法的名称，`XXX_test.c` 为测试算法有效性的文件，即main函数所在的文件。makefile为gnu make。使用`auto-c-files.el`(Emacs-Lisp代码)来生成这4个文件并载入相应的模板。`auto_make_template.mk`为makefile的模板。
 
 ## 说明二
 图的实现为邻接链表或者邻接矩阵。在对图进行测试时，使用的数据输入格式如下：
-### 邻接链表(以数据输入文件adj_table.dat为例)
+### 邻接链表(以数据输入文件`adj_table.dat`为例)
 
       // 顶点的索引均从0开始，连续索引
       0  // 图顶点的索引，用整数表示
@@ -33,7 +33,7 @@
       3 -> 1, weight: 0; 3 -> 4, weight: 0; 3 -> 2, weight: 0; 
       4 -> 0, weight: 0; 4 -> 3, weight: 0; 4 -> 1, weight: 0;
 
-### 邻接矩阵(以数据输入文件all_pair_shortest_path.dat为例)
+### 邻接矩阵(以数据输入文件`all_pair_shortest_path.dat`为例)
 
       5  // 顶点的个数，顶点索引为从0开始的连续索引，此处为0~4
       0 1 3  // edge: 0 -> 1 weight: 3
