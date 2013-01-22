@@ -2,3 +2,4 @@
 *.[do]
 *.exe
 *.gdb_history
+*.gitignore
