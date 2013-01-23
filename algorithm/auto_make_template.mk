@@ -1,20 +1,23 @@
-# change the "target" to your real target use M-% or C-M-%
-# add the c files used in SRCS
+# change your targets to your real targets
+MINGW := MINGW32_NT-6.1
 CC = gcc
 OFLAG = -o 
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -DDEBUG
 # get the dependent header files and change their name to source files
-FILES := $(filter %.c %.h, $(shell gcc -MM target_test.c))
+TARGET := target_to_change
+FILES := $(filter %.c %.h, $(shell gcc -MM $(addsuffix .c, $(TARGET))))
 SRCS := $(FILES:.h=.c)
-
 DEPS := $(SRCS:.c=.d)
-
-# 此处为变量的高级用法，将SRCS中所有的.c文件变成.o文件并保存为变量OBJECTS
 OBJECTS := $(SRCS:.c=.o)
 
 ifdef SystemRoot
-   RM = del /Q
-   FixPath = $(subst /,\,$1)
+   ifeq ($(shell uname), ${MINGW})
+      RM = rm -f
+      FixPath = $1
+   else
+      RM = del /Q
+      FixPath = $(subst /,\,$1)
+   endif
 else
    ifeq ($(shell uname), Linux)
       RM = rm -f
@@ -22,7 +25,8 @@ else
    endif
 endif
 
-all: target
+
+all: ${TARGET}
 
 -include $(DEPS)
 %.o:%.c
@@ -30,10 +34,10 @@ all: target
 
 # specify the header files dependency here
 # using the gcc -MM source.c option
-target: ${OBJECTS}
+${TARGET}: ${OBJECTS}
 	${CC} $^ ${OFLAG} $@
 
 .PHONY:clean
-# 注意call 后面的表达式不用加$符号
+# the "$" is not needed before "FixPath"
 clean:
 	$(RM) $(call FixPath, ${OBJECTS} ${DEPS})
