@@ -7,7 +7,7 @@
 
 
 
-void adj_set_weight(adj_pnode adjpnode, int weight)
+void adj_set_weight(AdjListNodePtr adjpnode, int weight)
 {
     adjpnode->weight = weight;
 }
@@ -15,11 +15,11 @@ void adj_set_weight(adj_pnode adjpnode, int weight)
 // 一个链表中插入一个元素
 // 直接在链表前端插入？
 
-adj_list adj_insert(adj_list adjl, int value)
+AdjList adj_insert(AdjList adjl, int value)
 {
     // 根据在哪里分配就在哪里释放的原理，在这里分配内存合适吗？
     // 为新结点分配内存
-    adj_pnode new = (adj_pnode)malloc(sizeof(adj_node));
+    AdjListNodePtr new = (AdjListNodePtr)malloc(sizeof(AdjListNode));
     if (!new)
     {
 	printf("malloc failed\n");
@@ -45,11 +45,11 @@ adj_list adj_insert(adj_list adjl, int value)
 }
 // 创建并插入一个带有权重的结点
 // adj_list是一个链表，不是一个结点，待续...
-adj_list adj_weight_insert(adj_list adjl, int value, int weight)
+AdjList adj_weight_insert(AdjList adjl, int value, int weight)
 {
     // 根据在哪里分配就在哪里释放的原理，在这里分配内存合适吗？
     // 为新结点分配内存
-    adj_pnode new = (adj_pnode)malloc(sizeof(adj_node));
+    AdjListNodePtr new = (AdjListNodePtr)malloc(sizeof(AdjListNode));
     if (!new)
     {
 	printf("malloc failed\n");
@@ -74,9 +74,9 @@ adj_list adj_weight_insert(adj_list adjl, int value, int weight)
 }
 
 // 释放链表
-void freeList(adj_list adjl)
+void freeList(AdjList adjl)
 {
-    adj_list current = adjl;
+    AdjList current = adjl;
     while (adjl) {
 	current = current->next;
 	free(adjl);
@@ -84,7 +84,7 @@ void freeList(adj_list adjl)
     }
 }
 // 释放邻接链表
-void freeAdjList(adj_list adjl[], int count)
+void free_adjlist(AdjList adjl[], int count)
 {
     int i;
     for (i = 0; i < count; i++) {
@@ -93,12 +93,12 @@ void freeAdjList(adj_list adjl[], int count)
     free(adjl);
 }
 // 增加数组的长度
-adj_list* arrRealloc(adj_list* adjList, int* parrLength)
+AdjList* arr_realloc(AdjList* adjList, int* parrLength)
 {
-    size_t newsize, oldsize = *parrLength * sizeof(adj_list);
-    adjList = (adj_list *)realloc(adjList, oldsize + INCREMENT_SIZE*sizeof(adj_list));
+    size_t newsize, oldsize = *parrLength * sizeof(AdjList);
+    adjList = (AdjList *)realloc(adjList, oldsize + INCREMENT_SIZE*sizeof(AdjList));
     *parrLength += INCREMENT_SIZE;
-    newsize = *parrLength * sizeof(adj_list);
+    newsize = *parrLength * sizeof(AdjList);
     if (!adjList)
     {
 	printf("realloc failed\n");
@@ -106,17 +106,17 @@ adj_list* arrRealloc(adj_list* adjList, int* parrLength)
 	exit(EXIT_FAILURE);
     }
     // 在使用变量时，要时刻记住变量的类型
-    memset(adjList+(oldsize/sizeof(adj_list)), 0, newsize - oldsize);
+    memset(adjList+(oldsize/sizeof(AdjList)), 0, newsize - oldsize);
     return adjList;
 }
 // 输出邻接链表
-void adj_output(adj_list adjList[], int length)
+void print_adjlist(AdjList adjList[], int length)
 {
     int i =0;
     printf("%d\n" ,length);
     for (i = 0; i < length; ++i)
     {
-	adj_pnode current = adjList[i];
+	AdjListNodePtr current = adjList[i];
 	while(current != NULL)
 	{
 	    printf("%d -> %d, ", i, current->vertex);
@@ -129,7 +129,7 @@ void adj_output(adj_list adjList[], int length)
     printf("\n");
 }
 
-adj_list* construct_weighted_adj_list(const char* filename, adj_list*
+AdjList* construct_weighted_adjlist(const char* filename, AdjList*
                                       adjList, int* pnumVertices)
 {
     int inode;
@@ -146,7 +146,7 @@ adj_list* construct_weighted_adj_list(const char* filename, adj_list*
     }
     // 如何动态扩充数组的大小？
     // the memory is set to zero.
-    adjList = (adj_list*)calloc(ALLOC_SIZE,  sizeof(adj_list));
+    adjList = (AdjList*)calloc(ALLOC_SIZE,  sizeof(AdjList));
     if (adjList == NULL)
     {
 	printf("can't calloc for adjList\n");
@@ -161,7 +161,7 @@ adj_list* construct_weighted_adj_list(const char* filename, adj_list*
 	// 动态增加数组的长度
 	if (inode >= ALLOC_SIZE)
 	{
-	    adjList = arrRealloc(adjList, &arrLength);
+	    adjList = arr_realloc(adjList, &arrLength);
 	}
 	icount++;
 	fscanf(pFile, "%d", &count);
@@ -182,18 +182,18 @@ adj_list* construct_weighted_adj_list(const char* filename, adj_list*
     } while (!feof(pFile));
     printf("input ended\n");
     fflush(stdout);
-    adj_output(adjList, icount);
+    print_adjlist(adjList, icount);
     fclose(pFile);
     *pnumVertices = icount;
     return adjList;
     
 }
-adj_list* construct_adj_list(const char* filename, adj_list* adjList,
+AdjList* construct_adjlist(const char* filename, AdjList* adjList,
                              int* pnumVertices)
 {
      // 如何动态扩充数组的大小？
     // the memory is set to zero.
-    adjList = (adj_list*)calloc(ALLOC_SIZE, sizeof(adj_list));
+    adjList = (AdjList*)calloc(ALLOC_SIZE, sizeof(AdjList));
     // adj_list adjList[10] = {NULL};
     int inode;
     int icount = 0;
@@ -216,7 +216,7 @@ adj_list* construct_adj_list(const char* filename, adj_list* adjList,
 	// 动态增加数组的长度
 	if (inode >= ALLOC_SIZE)
 	{
-	    adjList = arrRealloc(adjList, &arrLength);
+	    adjList = arr_realloc(adjList, &arrLength);
 	}
 	icount++;
 	fscanf(pFile, "%d", &count);
@@ -235,18 +235,18 @@ adj_list* construct_adj_list(const char* filename, adj_list* adjList,
     } while (!feof(pFile));
     printf("input ended\n");
     fflush(stdout);
-    adj_output(adjList, icount);
+    print_adjlist(adjList, icount);
     fclose(pFile);
     *pnumVertices = icount;
     return adjList;
 }
-adj_list* copy_adjlist(adj_list* graph, int numVertices)
+AdjList* copy_adjlist(AdjList* graph, int numVertices)
 {
     int i;
-    adj_list* gQuote;
-    gQuote = (adj_list*)calloc(numVertices, sizeof(adj_list));
+    AdjList* gQuote;
+    gQuote = (AdjList*)calloc(numVertices, sizeof(AdjList));
     for (i = 0; i < numVertices; i++) {
-	adj_pnode x = graph[i];
+	AdjListNodePtr x = graph[i];
 	while (x) {
 	    gQuote[i] = adj_weight_insert(gQuote[i], x->vertex, x->weight);
 	    x = x->next;
@@ -256,9 +256,9 @@ adj_list* copy_adjlist(adj_list* graph, int numVertices)
     return gQuote;
 }
 // 判断一条边是否存在
-EBool edge_exist(adj_list* graph, int numVertices, int u, int v)
+EBool edge_exist(AdjList* graph, int numVertices, int u, int v)
 {
-    adj_pnode x = graph[u];
+    AdjListNodePtr x = graph[u];
     while(x)
     {
 	if (x->vertex == v)
@@ -272,7 +272,7 @@ EBool edge_exist(adj_list* graph, int numVertices, int u, int v)
 
 // 要更新一个残留网络，首先图要支持的功能是，增加一条边和减少一条边
 // 假设顶点均存在
-EBool add_edge(adj_list* graph, int numVertices, int u, int v)
+EBool add_edge(AdjList* graph, int numVertices, int u, int v)
 {
     if (edge_exist(graph, numVertices, u, v))
     {
@@ -282,10 +282,10 @@ EBool add_edge(adj_list* graph, int numVertices, int u, int v)
     return TRUE;
 }
 // 假设顶点均存在
-EBool del_edge(adj_list* graph, int numVertices, int u, int v)
+EBool del_edge(AdjList* graph, int numVertices, int u, int v)
 {
     // 要删除一个结点，我得记住该结点的前一个结点
-    adj_pnode pre_x=NULL, x;
+    AdjListNodePtr pre_x=NULL, x;
     if (!edge_exist(graph, numVertices, u, v))
     {
 	return FALSE;

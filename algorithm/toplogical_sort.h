@@ -5,7 +5,7 @@
 #include "list.h"
 
 
-EBool toplogical_sort(adj_list* graph, int numVertices, List* sortedListPtr);
+EBool toplogical_sort(AdjList* graph, int numVertices, List* sortedListPtr);
 
 
 #endif /* _TOPLOGICAL_SORT_H_ */

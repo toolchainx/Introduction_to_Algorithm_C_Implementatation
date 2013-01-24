@@ -4,7 +4,7 @@
 #include "queue.h"
 // 队头和队尾的索引利用求余来进行卷绕
 // 入队操作
-int enqueue(queue* q, int value)
+int enqueue(Queue* q, int value)
 {
     // q->tail 总是指向无元素的位置
     // q->head 总是指向队头元素
@@ -21,7 +21,7 @@ int enqueue(queue* q, int value)
 }
 
 // 出队操作
-int dequeue(queue* q, int* pvalue)
+int dequeue(Queue* q, int* pvalue)
 {
     // 判断队列是否为空
     if (q->head == q->tail)
@@ -34,7 +34,7 @@ int dequeue(queue* q, int* pvalue)
     return 1;
 }
 
-void printQueue(queue* q)
+void printQueue(Queue* q)
 {
     int i = q->head;
     while (i != q->tail) {
@@ -43,21 +43,3 @@ void printQueue(queue* q)
     }
     printf("\n");
 }
-/* int main(int argc, char *argv[]) */
-/* { */
-/*     int array[] = {1, 2, 3, 4, 5, 6}; */
-/*     int i; */
-/*     queue q; */
-/*     q.head = q.tail = 0; */
-/*     for (i = 0; i < sizeof(array)/sizeof(array[0]); i++) { */
-/* 	int value; */
-/* 	printQueue(&q); */
-/* 	dequeue(&q, &value); */
-/*     } */
-/*     for (i = 0; i < sizeof(array)/sizeof(array[0]); i++) { */
-/*     	int value; */
-/* 	enqueue(&q, array[i]); */
-/*     	printQueue(&q); */
-/*     } */
-/*     return 0; */
-/* } */

@@ -6,6 +6,6 @@
 #include "toplogical_sort.h"
 #include "adj_table.h"
 
-void dag_shortest_path(adj_list* graph, int length, int s, int d[], int parent[]);
+void dag_shortest_path(AdjList* graph, int length, int s, int d[], int parent[]);
 
 #endif /* _DAG_SHORTEST_PATH_H_ */

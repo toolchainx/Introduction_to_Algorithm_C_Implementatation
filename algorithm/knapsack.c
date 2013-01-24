@@ -15,7 +15,7 @@
     }
 */
 // tail call
-void getTheObj(int totval[N+1][Y+1], int index1, int index2, int w[N])
+void get_obj(int totval[N+1][Y+1], int index1, int index2, int w[N])
 {
   if(index1 < 0)
     {
@@ -25,11 +25,11 @@ void getTheObj(int totval[N+1][Y+1], int index1, int index2, int w[N])
   if(totval[index1][index2] < totval[index1 +1][index2])
     {
       printf("%d\n", index1+1);
-      getTheObj(totval, index1 -1, index2-w[index1+1], w);
+      get_obj(totval, index1 -1, index2-w[index1+1], w);
     }
   else
     {
-      getTheObj(totval, index1 -1, index2, w);
+      get_obj(totval, index1 -1, index2, w);
     }
 }
 int main(void)
@@ -74,5 +74,5 @@ int main(void)
       } 
   // 输出最高价值和选择的物品
   printf("the total value of the knapsack is %d\n", totval[N][Y]);
-  getTheObj(totval, N-1, Y, w);
+  get_obj(totval, N-1, Y, w);
 }

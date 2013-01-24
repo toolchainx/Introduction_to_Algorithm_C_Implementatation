@@ -5,8 +5,8 @@
 #include "adj_table.h"
 #include <stdio.h>
 
-void print(int point);
+void print_arr(int point);
 
-void print_path(adj_list* pAdjl, int* parent, int start, int end);
+void print_path(AdjList* pAdjl, int* parent, int start, int end);
 
 #endif /* _PRINT_PATH_H_ */

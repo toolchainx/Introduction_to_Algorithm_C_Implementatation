@@ -22,7 +22,7 @@ void extend_shortest_paths(const AdjMat* l, AdjMat* lquote, const AdjMat* w)
 	    }
 	}
     }
-    return lquote;
+//    return lquote;
 }
 // 假定w已分配内存，设置了正确的值
 AdjMat* slow_all_pair_shortest_path(const AdjMat* w)

@@ -25,9 +25,9 @@
 // key为数组，保存初始化的权重
 // h为Fibonacci heap
 // fpnArray为保存优先队列中每个结点指针的数组
-void construct_queue(adj_list graph[], int gSize, int key[], FibHeap h, FbhPNode fpnArray[])
+void construct_queue(AdjList graph[], int gSize, int key[], FibHeap h, FibHeapNodePtr fpnArray[])
 {
-    FbhPNode x;
+    FibHeapNodePtr x;
     int i;
     for (i = 0; i < gSize; i++) {
 	x = fib_heap_node_allocate(i);
@@ -57,14 +57,14 @@ void mst_prim_print(int parent[], int size, int idx)
 // r为数组的索引
 // u, v为指针
 // 利用元素为指针的数组来索引优先级队列中的所有元素
-void mst_prim(adj_list* graph, int gSize, int rIdx)
+void mst_prim(AdjList* graph, int gSize, int rIdx)
 {
     int i;
     int key[gSize];
-    adj_pnode v;
+    AdjListNodePtr v;
     int parent[gSize];
     FibHeap h = make_fib_heap();
-    FbhPNode fpnArray[gSize];
+    FibHeapNodePtr fpnArray[gSize];
     for (i = 0; i < gSize; i++) {
 	key[i] = INT_MAX;
 	parent[i] = NOP;
@@ -74,7 +74,7 @@ void mst_prim(adj_list* graph, int gSize, int rIdx)
     construct_queue(graph, gSize, key, h, fpnArray);
     fib_heap_root_print(h->min);
     while (h->min != NIL) {
-	FbhPNode u = fib_heap_extract_min(h);
+	FibHeapNodePtr u = fib_heap_extract_min(h);
 	printf("extract_min: %d\n", u->ref);
 	/* printf("after extract_min\n"); */
 	/* fib_heap_root_print(h->min); */
@@ -100,14 +100,14 @@ void mst_prim(adj_list* graph, int gSize, int rIdx)
 
 int main(int argc, char *argv[])
 {
-    adj_list* graph =  NULL;
+    AdjList* graph =  NULL;
     int numVertices;
     // 构建邻接链表，将数据从mst_prim.dat文件中读入
     int rIdx;
     printf("input the rIdx\n");
     fflush(stdout);
     scanf("%d", &rIdx);
-    graph = construct_weighted_adj_list(argv[1], graph, &numVertices);
+    graph = construct_weighted_adjlist(argv[1], graph, &numVertices);
     mst_prim(graph, numVertices, rIdx);
     return 0;
 }

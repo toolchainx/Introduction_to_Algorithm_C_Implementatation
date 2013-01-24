@@ -8,7 +8,7 @@
 #include "single_source_shortest_path.h" 
 #include "dijkstra.h"
 
-AdjMat* johnson(adj_list* graph, int numVertices);
+AdjMat* johnson(AdjList* graph, int numVertices);
 
 
 #endif /* _JOHNSON_H_ */

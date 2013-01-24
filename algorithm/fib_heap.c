@@ -48,7 +48,7 @@ FibHeap make_fib_heap()
 }
 
 /* 插入一个结点 */
-int fib_heap_insert(FibHeap h, FbhPNode x)
+int fib_heap_insert(FibHeap h, FibHeapNodePtr x)
 {
     x->degree = 0;
     x->parent = NIL;
@@ -70,7 +70,7 @@ int fib_heap_insert(FibHeap h, FbhPNode x)
 }
 
 // 返回指向最小结点的指针
-FbhPNode fib_heap_minimum(FibHeap h)
+FibHeapNodePtr fib_heap_minimum(FibHeap h)
 {
     return h->min;
 }
@@ -98,7 +98,7 @@ FibHeap fib_heap_union(FibHeap h1, FibHeap h2)
 // 假定x和y均不为NIL，且x和y均为根表中的结点
 // 将y作为x的子结点
 // 修改y和x的变量名，y -> bechild x -> beparent
-void fib_heap_link(FibHeap h, FbhPNode y, FbhPNode x)
+void fib_heap_link(FibHeap h, FibHeapNodePtr y, FibHeapNodePtr x)
 {
     // remove y from the root list of h
     y->right->left = y->left;
@@ -123,8 +123,8 @@ void consolidate(FibHeap h)
     // 使用了一个辅助数组array[0.. D(n[h])] D(n[h])为结点的最大度数的已知上界
     // D(n[h]) <= floor(以(1 + sqrt(5))/2为底对n求对数)
     const int dupperbound = (int)(log(h->n)/log((1 + sqrt(5.0))/2.0))+1;
-    FbhPNode array[dupperbound];
-    FbhPNode w, x, y, sentinel;
+    FibHeapNodePtr array[dupperbound];
+    FibHeapNodePtr w, x, y, sentinel;
     printf("the number of the heap node is %d\n", h->n);
     printf("the dupperbound is %d\n", dupperbound);
     int i,d;
@@ -148,7 +148,7 @@ void consolidate(FibHeap h)
 		// 交换x和y的指针
 		// 如果x和哨兵sentinel指向同一个结点
 		// 同时改变哨兵的指针
-		FbhPNode tmp = x;
+		FibHeapNodePtr tmp = x;
 		x = y;
 		y = tmp;
 	    }
@@ -247,7 +247,7 @@ RootTblPtr fib_heap_extract_min(FibHeap h)
 
 
 // 假定h->min不为NIL，x不为NIL，y不为NIL
-void cut(FibHeap h, FbhPNode x, FbhPNode y)
+void cut(FibHeap h, FibHeapNodePtr x, FibHeapNodePtr y)
 {
     // remove x from the child list of y, decrementing degree[x]
     // 考虑x是y唯一的子结点？
@@ -274,9 +274,9 @@ void cut(FibHeap h, FbhPNode x, FbhPNode y)
     x->mark = FALSE;
 }
 
-void cascading_cut(FibHeap h, FbhPNode y)
+void cascading_cut(FibHeap h, FibHeapNodePtr y)
 {
-    FbhPNode z = y->parent;
+    FibHeapNodePtr z = y->parent;
     if (z != NIL)
     {
 	if (y->mark == FALSE)
@@ -293,9 +293,9 @@ void cascading_cut(FibHeap h, FbhPNode y)
 
 // 减小一个关键字
 // 假定从链表中删除一个结点并不改变被删除结点的任何结构域
-void fib_heap_decrease_key(FibHeap h, FbhPNode x, int k)
+void fib_heap_decrease_key(FibHeap h, FibHeapNodePtr x, int k)
 {
-    FbhPNode y;
+    FibHeapNodePtr y;
     if (k > x->key)
     {
 	printf("new key is greater than the current key\n");
@@ -316,43 +316,38 @@ void fib_heap_decrease_key(FibHeap h, FbhPNode x, int k)
     }
 }
 
-void fib_heap_delete(FibHeap h, FbhPNode x)
+void fib_heap_delete(FibHeap h, FibHeapNodePtr x)
 {
     fib_heap_decrease_key(h, x, INT_MIN);
     fib_heap_extract_min(h);
 }
 
-FbhPNode fib_heap_node_allocate(int key)
+FibHeapNodePtr fib_heap_node_allocate(int key)
 {
-    FbhPNode x = (FbhPNode)malloc(sizeof(FbhNode));
+    FibHeapNodePtr x = (FibHeapNodePtr)malloc(sizeof(FibHeapNode));
     x->key = key;
     x->inq = TRUE;
     return x;
 }
 
-FbhPNode testPtr;
 FibHeap fib_heap_construct(int arr[], int length)
 {
     int i;
     FibHeap h = make_fib_heap();
-    FbhPNode x;
+    FibHeapNodePtr x;
     assert(length >= 0);
     for (i = 0; i < length; i++) {
 	x = fib_heap_node_allocate(arr[i]);
-	if (arr[i] == 52)
-	{
-	    testPtr = x;
-	}
 	fib_heap_insert(h, x);
     }
     return h;    
 }
 
 // 打印所有的元素
-void fib_heap_root_print(FbhPNode r)
+void fib_heap_root_print(FibHeapNodePtr r)
 {
-    FbhPNode x = r;
-    FbhPNode sentinel = x;
+    FibHeapNodePtr x = r;
+    FibHeapNodePtr sentinel = x;
     if (x != NIL)
     {
 	do 
@@ -369,35 +364,3 @@ void fib_heap_root_print(FbhPNode r)
     }
     fflush(stdout);
 }
-// test the Fibonacci heap
-/* int main(int argc, char *argv[]) */
-/* { */
-/*     int arr1[NUMARRAY] = {23, 7, 21, 3}; */
-/*     // int arr1[NUMARRAY] = {3, 7, 23, 21, 24, 18, 52, 17}; */
-/*     int arr2[NUMARRAY] = {17, 24, 18, 52}; */
-/*     // 构建堆 */
-/*     FibHeap h1 = fib_heap_construct(arr1, sizeof(arr1)/sizeof(*arr1)); */
-/*     printf("h1:\n"); */
-/*     // fib_heap_extract_min(h1); */
-/*     fib_heap_root_print(h1->min); */
-/*     FibHeap h2 = fib_heap_construct(arr2, sizeof(arr2)/sizeof(*arr2)); */
-/*     printf("h2:\n"); */
-/*     fib_heap_root_print(h2->min); */
-/*     FibHeap h = fib_heap_union(h1, h2); */
-/*     printf("h:\n"); */
-/*     fib_heap_root_print(h->min); */
-/*     RootTblPtr min = fib_heap_extract_min(h); */
-/*     printf("min = %d\n", min->key); */
-/*     fib_heap_root_print(h->min); */
-/*     min = fib_heap_minimum(h); */
-/*     fib_heap_decrease_key(h, min, 5); */
-/*     printf("after decreased key h:\n"); */
-/*     fib_heap_root_print(h->min); */
-/*     fib_heap_delete(h, min); */
-/*     printf("after delete key h:\n"); */
-/*     fib_heap_root_print(h->min); */
-/*     fib_heap_delete(h, testPtr); */
-/*     printf("after delete key 52 h:\n"); */
-/*     fib_heap_root_print(h->min); */
-/*     return 0; */
-/* } */

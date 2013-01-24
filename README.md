@@ -1,7 +1,7 @@
 # 包含算法导论第二版伪代码的C语言实现
 
 ## 说明一
-每个算法包含4个文件，即`XXX.h` `XXX.c` `XXX.mk` `XXX_test.c` 文件，`XXX`为算法的名称，`XXX_test.c` 为测试算法有效性的文件，即main函数所在的文件。makefile为gnu make。使用`auto-c-files.el`(Emacs-Lisp代码)来生成这4个文件并载入相应的模板。`auto_make_template.mk`为makefile的模板。
+每个算法包含3个文件，即`XXX.h` `XXX.c` `XXX_test.c` 文件，`XXX`为算法的名称，`XXX_test.c` 为测试算法有效性的文件，即main函数所在的文件。makefile为generic.mk及makefile.sub。使用`auto-c-files.el`(Emacs-Lisp代码)来生成这3个文件并载入相应的模板。
 
 ## 说明二
 图的实现为邻接链表或者邻接矩阵。在对图进行测试时，使用的数据输入格式如下：
@@ -24,7 +24,7 @@
       3
       0 1 3 // 文件在最后一个数据终止，该行没有换行符
 
-      函数adj_output()输出的结果为：
+      函数print_adjlist()输出的结果为：
 
       5
       0 -> 1, weight: 0; 0 -> 4, weight: 0; 
@@ -61,6 +61,7 @@
   1. 排序算法
      * 堆排序		`heap_sort`
      * 快速排序		`quick_sort`
+     * 索引排序		`sort_arr_idx`
   2. 基本数据结构
      * 栈		`stack`
      * 队列		`queue`
@@ -68,7 +69,7 @@
      * 邻接链表		`adj_table`
      * 邻接矩阵		`adj_mat`
   3. 树
-     * 二叉查找树		`bst`
+     * 二叉查找树	`bst`
      * 红黑树     	`rbtree`
   4. 堆
      * 二项堆		`binomial_heap`

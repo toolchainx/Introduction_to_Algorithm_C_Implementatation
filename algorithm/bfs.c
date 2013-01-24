@@ -14,12 +14,12 @@
 // 同时进行辅助作用的是一个FIFO queue
 // 考虑以上因素对bfs的函数接口进行设计
 // 前提假定distance和parent均已分配好
-adj_list* bfs(adj_list* pAdjl, int numVertices, int org_vertex, int* distance, int* parent)
+AdjList* bfs(AdjList* pAdjl, int numVertices, int org_vertex, int* distance, int* parent)
 {
     // for breadth-first search
-    Color *color = (Color*)malloc(numVertices * sizeof(Color));
+    EColor *color = (EColor*)malloc(numVertices * sizeof(EColor));
     int i;
-    queue q;
+    Queue q;
     // 根据顶点初始化队列操作
 // 初始化队列为空
     q.head = q.tail = 0;
@@ -57,7 +57,7 @@ adj_list* bfs(adj_list* pAdjl, int numVertices, int org_vertex, int* distance, i
 // 开始搜索
     while (q.head != q.tail) {
 	int u;
-	adj_list pv;
+	AdjList pv;
 	dequeue(&q, &u);
 	pv = pAdjl[u];
 	while (pv) {
@@ -78,14 +78,14 @@ adj_list* bfs(adj_list* pAdjl, int numVertices, int org_vertex, int* distance, i
     free(color);
     return pAdjl;
 }
-static void print(int point)
+static void print_arr(int point)
 {
     printf("%d ", point);
 }
 // 打印两点间的最短路径所经过的中间点
 // 计算两个顶点间的最短路径，将路径中经过的顶点索引按s->t顺序保存在数组中
 // path数组的内存已分配好
-EBool calc_path(adj_list* graph, int numVertices, int* parent, int s, int t, Stack path)
+EBool calc_path(AdjList* graph, int numVertices, int* parent, int s, int t, Stack path)
 {
     int x = t;
     while (x != s) {
@@ -100,11 +100,11 @@ EBool calc_path(adj_list* graph, int numVertices, int* parent, int s, int t, Sta
     return TRUE;
 }
 // 如何将该函数的递归版本改成迭代版本？ 递归版本需要传递的参数的数量太多
-void print_path(adj_list* pAdjl, int numVertices, int* parent, int start, int end)
+void print_path(AdjList* pAdjl, int numVertices, int* parent, int start, int end)
 {
     if (start == end)
     {
-	print(start);
+	print_arr(start);
     }
     else if (parent[end] == NILVALUE)
     {
@@ -113,7 +113,7 @@ void print_path(adj_list* pAdjl, int numVertices, int* parent, int start, int en
     else
     {
 	print_path(pAdjl, numVertices, parent, start, parent[end]);
-	print(end);
+	print_arr(end);
     }
 }
 

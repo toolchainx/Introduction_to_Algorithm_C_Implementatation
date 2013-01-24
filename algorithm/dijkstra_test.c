@@ -8,7 +8,7 @@
 
  int main(int argc, char *argv[])
 {
-    adj_list* graph = NULL;
+    AdjList* graph = NULL;
     int length;
     int i;
     int s;
@@ -21,7 +21,7 @@
 	exit(EXIT_FAILURE);
     }
     sscanf(argv[2], "%d", &s);
-    graph = construct_weighted_adj_list(argv[1], graph, &length);
+    graph = construct_weighted_adjlist(argv[1], graph, &length);
     // 根据邻接链表的长度分配最短路径估计和前驱数组
     d = (int *)malloc(length * sizeof(int));
     parent = (int *)malloc(length * sizeof(int));

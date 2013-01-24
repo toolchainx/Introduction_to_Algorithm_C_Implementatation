@@ -18,7 +18,7 @@ typedef struct tagRootTbl
     int degree;
     int key;
     Mark mark;    
-}*RootTblPtr, *FbhPNode, FbhNode;
+}*RootTblPtr, *FibHeapNodePtr, FibHeapNode;
 typedef struct tagFibHeap
 {
     int n;
@@ -35,10 +35,10 @@ void concatenate_root_list(RootTblPtr root1, RootTblPtr root2);
 FibHeap make_fib_heap();
 
 /* 插入一个结点 */
-int fib_heap_insert(FibHeap h, FbhPNode x);
+int fib_heap_insert(FibHeap h, FibHeapNodePtr x);
 
 // 返回指向最小结点的指针
-FbhPNode fib_heap_minimum(FibHeap h);
+FibHeapNodePtr fib_heap_minimum(FibHeap h);
 
 // 合并两个Fibonacci 堆
 FibHeap fib_heap_union(FibHeap h1, FibHeap h2);
@@ -46,7 +46,7 @@ FibHeap fib_heap_union(FibHeap h1, FibHeap h2);
 // 假定x和y均不为NIL，且x和y均为根表中的结点
 // 将y作为x的子结点
 // 修改y和x的变量名，y -> bechild x -> beparent
-void fib_heap_link(FibHeap h, FbhPNode y, FbhPNode x);
+void fib_heap_link(FibHeap h, FibHeapNodePtr y, FibHeapNodePtr x);
 
 // 假定h不为NIL, 且h->min也不为NIL
 void consolidate(FibHeap h);
@@ -55,22 +55,22 @@ void consolidate(FibHeap h);
 RootTblPtr fib_heap_extract_min(FibHeap h);
 
 // 假定h->min不为NIL，x不为NIL，y不为NIL
-void cut(FibHeap h, FbhPNode x, FbhPNode y);
+void cut(FibHeap h, FibHeapNodePtr x, FibHeapNodePtr y);
 
-void cascading_cut(FibHeap h, FbhPNode y);
+void cascading_cut(FibHeap h, FibHeapNodePtr y);
 
 // 减小一个关键字
 // 假定从链表中删除一个结点并不改变被删除结点的任何结构域
-void fib_heap_decrease_key(FibHeap h, FbhPNode x, int k);
+void fib_heap_decrease_key(FibHeap h, FibHeapNodePtr x, int k);
 
-void fib_heap_delete(FibHeap h, FbhPNode x);
+void fib_heap_delete(FibHeap h, FibHeapNodePtr x);
 
-FbhPNode fib_heap_node_allocate(int key);
+FibHeapNodePtr fib_heap_node_allocate(int key);
 
 FibHeap fib_heap_construct(int arr[], int length);
 
 // 打印所有的元素
-void fib_heap_root_print(FbhPNode r);
+void fib_heap_root_print(FibHeapNodePtr r);
 
 
 

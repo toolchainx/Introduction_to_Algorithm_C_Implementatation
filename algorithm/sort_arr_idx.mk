@@ -4,7 +4,7 @@ CC = gcc
 OFLAG = -o 
 CFLAGS = -Wall -g -DDEBUG
 # get the dependent header files and change their name to source files
-TARGET := johnson_test
+TARGET := sort_arr_idx_test
 FILES := $(filter %.c %.h, $(shell gcc -MM $(addsuffix .c, $(TARGET))))
 SRCS := $(FILES:.h=.c)
 DEPS := $(SRCS:.c=.d)

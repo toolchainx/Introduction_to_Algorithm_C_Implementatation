@@ -1,4 +1,5 @@
 #include <stdio.h>  
+#include <stdlib.h>
 	   
 // print a array  
 void PRline(unsigned int* s, int count)  
@@ -13,10 +14,11 @@ void PRline(unsigned int* s, int count)
 // 找到这样的i， 第 m 次洗牌的效果和第 m + i次洗牌的效果一样
 unsigned int CalLoop( unsigned int x )  
 {  
+    int i;
      unsigned int val = 2ull;  
      unsigned int x1 = x + 1u;  
      unsigned int x2 = x - 1u;  
-     for( unsigned int i = 1; i <= x ; i ++, val<<=1 )  
+     for(i = 1; i <= x ; i ++, val<<=1 )  
      {  
 	  while( val >= x1 ) val -= x;  
 	  if( val == 1u ) return i;  
@@ -40,8 +42,8 @@ unsigned int Mod( unsigned int pow2, unsigned int x )
 void WashPoker( unsigned int N, unsigned int k )  
 {  
      unsigned int N2_1 = (N<<1) - 1u;  
-     unsigned int *a = new unsigned int[ N2_1 + 1u ];  
-     unsigned int i, j, spos, pos, temp, temp2;  
+     unsigned int *a = (unsigned int *)malloc((N2_1 + 1u) * sizeof(unsigned int));
+     unsigned int i, spos, pos, temp, temp2;  
      // 初始化数组
      for( i = 0; i <= N2_1; i++ ) a[i] = i+1u;  
      temp = CalLoop( N2_1 );  
@@ -65,7 +67,7 @@ void WashPoker( unsigned int N, unsigned int k )
 	  }  
      }  
      PRline( a, N<<1 );  
-     delete []a;  
+     free(a);
 }  
 	   
 	   

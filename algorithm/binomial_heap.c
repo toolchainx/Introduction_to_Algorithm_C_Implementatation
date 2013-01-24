@@ -13,7 +13,7 @@ typedef struct tagBinomialHeap
     struct tagBinomialHeap* sibling;
     int key;
     int degree;
-}*BmHeap, *BmPNode, BmNode;
+}*BmHeap, *BmNodePtr, BmNode;
 
 
 // 创建一个新的二项堆
@@ -23,13 +23,13 @@ BmHeap make_binomial_heap()
 }
 
 // 寻找最小关键字
-BmPNode binomial_heap_minimum(BmHeap h)
+BmNodePtr binomial_heap_minimum(BmHeap h)
 {
     // y 为要返回的最小关键字的指针
     // x 为迭代器
     // min 用于比较的临时变量
-    BmPNode y = NIL;
-    BmPNode x = h;
+    BmNodePtr y = NIL;
+    BmNodePtr x = h;
     int min = INT_MAX;
     while (x != NIL) {
 	if (min > x->key)
@@ -51,7 +51,7 @@ void binomial_link(BmHeap y, BmHeap z)
     z->child = y;
     z->degree++;
 }
-void binomial_heap_print_tree(BmPNode t);
+void binomial_heap_print_tree(BmNodePtr t);
 void binomial_heap_print_root(BmHeap h);
 // 将二项堆h1和h2的根表合成一个根表h
 // 返回一个按单调递增度数排序的根表h
@@ -65,9 +65,9 @@ BmHeap binomial_heap_merge(BmHeap h1, BmHeap h2)
     // prev_a1始终指向a1的前一个结点，或为NIL
     // 分情况进行讨论
     // 根表h1最后一个结点的sibling成员不为NIL
-    BmPNode prev_a1 = NIL;
-    BmPNode a1 = h1;
-    BmPNode a2 = h2;
+    BmNodePtr prev_a1 = NIL;
+    BmNodePtr a1 = h1;
+    BmNodePtr a2 = h2;
     while (a2) {
 	if (a1 == NIL)
 	{
@@ -106,9 +106,9 @@ BmHeap binomial_heap_union(BmHeap h1, BmHeap h2)
 {
     // 要返回的局部变量h
     BmHeap h;
-    BmPNode prev_x;
-    BmPNode x;
-    BmPNode next_x;    
+    BmNodePtr prev_x;
+    BmNodePtr x;
+    BmNodePtr next_x;    
     // 该函数没有参数
     h = make_binomial_heap();
     h = binomial_heap_merge(h1, h2);
@@ -153,7 +153,7 @@ BmHeap binomial_heap_union(BmHeap h1, BmHeap h2)
 }
 
 // 插入一个结点，假定x已分配内存，且key字段已赋值
-BmHeap binomial_heap_insert(BmHeap* ph, BmPNode x)
+BmHeap binomial_heap_insert(BmHeap* ph, BmNodePtr x)
 {
     BmHeap hq = make_binomial_heap();    
     // 初始化x
@@ -166,13 +166,13 @@ BmHeap binomial_heap_insert(BmHeap* ph, BmPNode x)
     return *ph;
 }
 // 获取minimum 结点的前一个结点的指针
-BmPNode binomial_heap_prev_min(BmHeap h)
+BmNodePtr binomial_heap_prev_min(BmHeap h)
 {
     // find the root x with the minimum key in the root list of h,
     // and remove x from the root list of h
-    BmPNode prev_x = NIL;
-    BmPNode x = h;
-    BmPNode prev_y = NIL;
+    BmNodePtr prev_x = NIL;
+    BmNodePtr x = h;
+    BmNodePtr prev_y = NIL;
     // 另一个解法，只利用prev_x 和 prev_y 来进行处理？
     int min = INT_MAX;
     while (x != NIL) {
@@ -189,12 +189,12 @@ BmPNode binomial_heap_prev_min(BmHeap h)
 // reverse the order of the linked list of x's children, setting 
 // the parent field of each child to NIL,
 // and set hq to point to the head of the resulting list
-BmHeap binomial_heap_reverse_child(BmPNode y)
+BmHeap binomial_heap_reverse_child(BmNodePtr y)
 {
     // 将y的子女排序反转
     BmHeap h = make_binomial_heap();
-    BmPNode x;
-    BmPNode iter_x;
+    BmNodePtr x;
+    BmNodePtr iter_x;
     x = y->child;
     y->child = NIL;
     while(x != NIL)
@@ -219,7 +219,7 @@ BmHeap binomial_heap_reverse_child(BmPNode y)
 
 // 抽取具有最小关键字的结点，并返回指向该结点的指针
 // need to debug
-BmPNode binomial_heap_extract_min(BmHeap* ph)
+BmNodePtr binomial_heap_extract_min(BmHeap* ph)
 {
     // 如果prev_y 为NIL？
     BmHeap prev_y = binomial_heap_prev_min(*ph);
@@ -249,7 +249,7 @@ BmPNode binomial_heap_extract_min(BmHeap* ph)
 }
 
 // 交换两个结点的关键字
-void binomial_heap_key_swap(BmPNode lhs, BmPNode rhs)
+void binomial_heap_key_swap(BmNodePtr lhs, BmNodePtr rhs)
 {
     // if lhs and rhs have satellite fields, exchange them too.
     int tmp = lhs->key;
@@ -257,10 +257,10 @@ void binomial_heap_key_swap(BmPNode lhs, BmPNode rhs)
     rhs->key = tmp;
 }
 // 减小关键字的值
-void binomial_heap_decrease_key(BmHeap h, BmPNode x, int k)
+void binomial_heap_decrease_key(BmHeap h, BmNodePtr x, int k)
 {
-    BmPNode y;
-    BmPNode z;
+    BmNodePtr y;
+    BmNodePtr z;
     if (k > x->key )
     {
 	printf("new key is greater than current key\n");
@@ -281,7 +281,7 @@ void binomial_heap_decrease_key(BmHeap h, BmPNode x, int k)
 }
 
 // delete a node
-void binomial_heap_delete(BmHeap* ph, BmPNode x)
+void binomial_heap_delete(BmHeap* ph, BmNodePtr x)
 {
     binomial_heap_decrease_key(*ph, x, INT_MIN);
     printf("derease_key completed\n");
@@ -294,7 +294,7 @@ BmHeap construct_binomial_heap(const char* filename)
 {
     FILE* pFile;
     BmHeap h = NIL;
-    BmPNode x;
+    BmNodePtr x;
     int k;
     if ((pFile = fopen(filename, "r")) == NULL)
     {
@@ -304,7 +304,7 @@ BmHeap construct_binomial_heap(const char* filename)
     }
     while (!feof(pFile)) {
 	fscanf(pFile, "%d", &k);
-	x = (BmPNode)malloc(sizeof(BmNode));
+	x = (BmNodePtr)malloc(sizeof(BmNode));
 	if (x == NULL)
 	{
 	    printf("can't malloc for var x, %s, %d\n", __FILE__, __LINE__);
@@ -319,10 +319,10 @@ BmHeap construct_binomial_heap(const char* filename)
     printf("construct complete!\n");
     return h;
 }
-void binomial_heap_print_tree(BmPNode t)
+void binomial_heap_print_tree(BmNodePtr t)
 {
     // 递归打印结点
-    BmPNode x = t->child;
+    BmNodePtr x = t->child;
     printf("key: %d, degree: %d\n", t->key, t->degree);
     while (x) {
     	binomial_heap_print_tree(x);
@@ -333,7 +333,7 @@ void binomial_heap_print_tree(BmPNode t)
 void binomial_heap_print_root(BmHeap h)
 {
     // 打印根表的关键字值和度数
-    BmPNode x = h;
+    BmNodePtr x = h;
     char * test = "明天是更好的一天";
     while (x) {
 	binomial_heap_print_tree(x);
@@ -368,7 +368,7 @@ int main(int argc, char *argv[])
     BmHeap h = make_binomial_heap();
     BmHeap h1 = make_binomial_heap();
     BmHeap h2 = make_binomial_heap();
-    BmPNode min;
+    BmNodePtr min;
     if (argc < 2)
     {
 	printf("%s filename.dat ... \n", argv[0]);

@@ -21,12 +21,12 @@
 // key为数组，保存初始化的权重
 // h为Fibonacci heap
 // fpnArray为保存优先队列中每个结点指针的数组
-void construct_queue(adj_list graph[], int gSize, int key[], FibHeap h, FbhPNode fpnArray[]);
-void dijkstra_relax(int u, int v, int w, int parent[], FbhPNode fpnArray[], FibHeap h);
+void construct_queue(AdjList graph[], int gSize, int key[], FibHeap h, FibHeapNodePtr fpnArray[]);
+void dijkstra_relax(int u, int v, int w, int parent[], FibHeapNodePtr fpnArray[], FibHeap h);
 // 将d[]拷贝到优先队列中，在优先队列中对d进行修改(decreace_key)
 // 处理完成后，再拷贝出来
 // 假定graph，d[]，parent[]均已分配内存
-void dijkstra(adj_list* graph, int numVertices, int s, int d[], int parent[]);
+void dijkstra(AdjList* graph, int numVertices, int s, int d[], int parent[]);
 
 
 #endif /* _DIJKSTRA_H_ */

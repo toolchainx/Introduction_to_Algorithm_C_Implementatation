@@ -39,7 +39,7 @@ int partition(int A[], int p, int r)
     swap(A, i+1, r);
     return i+1;
 }
-void print(int A[], int length)
+void print_arr(int A[], int length)
 {
     int i;
     for(i = 0; i < length; i++)

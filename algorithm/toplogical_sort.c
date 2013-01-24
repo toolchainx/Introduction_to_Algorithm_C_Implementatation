@@ -5,7 +5,7 @@
 
 
 
-EBool toplogical_sort(adj_list* graph, int numVertices, List* sortedListPtr)
+EBool toplogical_sort(AdjList* graph, int numVertices, List* sortedListPtr)
 {
     // 分配数组，保存先辈子图parent[]，探测时间d[]，完成时间f[]
     int i, j, min;
@@ -23,7 +23,7 @@ EBool toplogical_sort(adj_list* graph, int numVertices, List* sortedListPtr)
 	topSortArray[i] = i;
     }
 
-    dfs(graph, numVertices, parent, d, f);
+    dfs(graph, numVertices, parent, d, f, NULL);
     // 对数据的输出进行测试，如何测试？
     // 通过利用完成时间f[]来获得拓扑排序
     // 思考，如何按照数组中元素的值对数组中的索引进行排序?

@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     
     List list = NULL;
-    adj_list* graph = NULL;
+    AdjList* graph = NULL;
     int numVertices;
     if (argc != 2)
     {
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
     }
     // 构建图
-    graph = construct_adj_list(argv[1], graph, &numVertices);
+    graph = construct_adjlist(argv[1], graph, &numVertices);
     // 排序的结果为sort_arr的顶点序列按完成时间从大到小进行排序
     toplogical_sort(graph, numVertices, &list);
     print_list(list);

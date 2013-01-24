@@ -6,60 +6,48 @@
 // 依次访问每个顶点，得到图的强连通分支
 #include <stdio.h>
 #include <stdlib.h>
+#include "include/require.h"
+#include "sort_arr_idx.h"
 #include "dfs.h"
 #include "list.h"
 #include "adj_table.h"
 #include "transpose_adj_table.h"
 
-extern int Time;
-extern List list;
-extern int parent[];
-extern Color color[];
-extern int d[];
-extern int f[];
-
-
-void transpose_dfs(adj_list* graph, int numVertices, List lst)
-{
-    int i;
-    // 对数据结构进行初始化操作
-    Time = 0;
-    for (i = 0; i < ALLOC_SIZE; i++) {
-	color[i] = WHITE;
-	parent[i] = NIL;
-	d[i] = 0;
-	f[i] = 0;
-    }
-    while (lst) {
-	if(color[lst->value] == WHITE)
-	{
-	    dfs_visit(lst->value, graph, numVertices);
-	    printf("--------------------\n");
-	}
-	lst = lst->next;    
-    }
-    // 注意边界条件，初始化操作和结束操作
-}
 // 函数接口的设计
 // 输入：adj_list* graph，list用于拓扑排序
 // 输出：能否输出分支图？ 打印出所有强连通分支的顶点
 // 改变的值： graph，在转置的过程中使graph转变成graph_tanspose
-void scc(adj_list* graph, int numVertices)
+void scc(AdjList* graph, int numVertices)
 {
+    int *parent, *d, *f, *seq;
+    parent = (int *)malloc(numVertices * sizeof(int));
+    d = (int *)malloc(numVertices * sizeof(int));
+    f = (int *)malloc(numVertices * sizeof(int));
+    seq = (int *)malloc(numVertices * sizeof(int));
     // 深度优先搜索，同时对其进行拓扑排序，排序的结果保存在list中
-    dfs(graph, numVertices);
+    dfs(graph, numVertices, parent, d, f, NULL);
+    // sort the index of f by its value
+    printf("f: \n");
+    array_print(f, numVertices);
+    sort_arr_idx(f, numVertices, seq);
+    rvs_arr(seq, numVertices);
+    printf("seq: \n");
+    array_print(seq, numVertices);
     // 转置
     graph = transpose_adj_table(graph, numVertices);
     printf("the transposed graph\n");
-    adj_output(graph, numVertices);
+    print_adjlist(graph, numVertices);
     // 根据拓扑排序和转置的结果进行深度优先搜索
-    transpose_dfs(graph, numVertices, list);
-    
+    dfs(graph, numVertices, parent, d, f, seq);
+    free(parent);
+    free(d);
+    free(f);
+    free(seq);
 }
 
 int main(int argc, char *argv[])
 {
-    adj_list* pAdjl = NULL;
+    AdjList* pAdjl = NULL;
     int numVertices;
     if (argc != 2)
     {
@@ -68,10 +56,8 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
     }
     // 构建图
-    pAdjl = construct_adj_list(argv[1], pAdjl, &numVertices);
+    pAdjl = construct_adjlist(argv[1], pAdjl, &numVertices);
     // 对数据的输出进行测试，如何测试？
-    //
     scc(pAdjl, numVertices);
-    print_list(list);    
     return 0;
 }

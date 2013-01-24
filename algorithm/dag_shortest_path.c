@@ -9,9 +9,9 @@
 #include <stdlib.h>
 #include "dag_shortest_path.h"
 
-void dag_shortest_path(adj_list* graph, int length, int s, int d[], int parent[])
+void dag_shortest_path(AdjList* graph, int length, int s, int d[], int parent[])
 {
-    adj_pnode adjNode;
+    AdjListNodePtr adjNode;
     List list = NULL, x = NULL;
     // toplogically sort the vertices of G
     toplogical_sort(graph, length, &list);

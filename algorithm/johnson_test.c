@@ -4,7 +4,7 @@ int main(int argc, char *argv[])
 {
     FILE* pFile;
     int numVertices;
-    adj_list* g = NULL;
+    AdjList* g = NULL;
     AdjMat* d;
     if (argc != 2)
     {
@@ -16,13 +16,13 @@ int main(int argc, char *argv[])
 	printf("can't open %s\n", argv[1]);
 	exit(EXIT_FAILURE);
     }
-    g = construct_weighted_adj_list(argv[1], g, &numVertices);
-    adj_output(g, numVertices);
+    g = construct_weighted_adjlist(argv[1], g, &numVertices);
+    print_adjlist(g, numVertices);
     printf("johnson\n");
     fflush(stdout);
     d = johnson(g, numVertices);
     print_adjmat(d);
     free_adjmat(d);
-    freeAdjList(g, numVertices);
+    free_adjlist(g, numVertices);
     return 0;
 }

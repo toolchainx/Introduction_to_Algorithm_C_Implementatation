@@ -19,13 +19,13 @@
 // 输出参数：邻接链表adj_list*, 
 // 改变的值：d[],f[],color[](起辅助作用),parent[], 
 // 改变的值：list(save the result of the toplogical_sort() function);
-EBool dfs_visit(int i, adj_list* graph, int numVertices, Color* color, int* parent, int* d, int* f);
+EBool dfs_visit(int i, AdjList* graph, int numVertices, EColor * color, int* parent, int* d, int* f);
 // 假定graph parent, d, f的内存已分配好
-EBool dfs(adj_list* graph, int numVertices, int *parent, int* d, int* f)
+EBool dfs(AdjList* graph, int numVertices, int *parent, int* d, int* f, int *seq)
 {
     int i;
     // 对数据结构进行初始化操作
-    Color *color = (Color *)malloc(numVertices * sizeof(Color));
+    EColor *color = (EColor *)malloc(numVertices * sizeof(EColor));
     for (i = 0; i < numVertices; i++) {
 	color[i] = WHITE;
 	parent[i] = NILVALUE;
@@ -34,23 +34,25 @@ EBool dfs(adj_list* graph, int numVertices, int *parent, int* d, int* f)
     }
     // 注意边界条件，初始化操作和结束操作
     for (i = 0; i < numVertices; i++) {
-	if (color[i] == WHITE)
+	int n = (seq == NULL)? i:seq[i];
+	if (color[n] == WHITE)
 	{
 	    // 多次调用dfs_visit
-	    dfs_visit(i, graph, numVertices, color, parent, d, f);
+	    dfs_visit(n, graph, numVertices, color, parent, d, f);
 	}
 	printf("---------------------\n");
     }
     return TRUE;
 }
-void set_edge_type(int start, adj_list pendnode, Color *color, int* d);
+
+void set_edge_type(int start, AdjList pendnode, EColor *color, int* d);
 // 该过程是个递归调用的过程
-EBool dfs_visit(int i, adj_list* graph, int numVertices, Color* color, int* parent, int* d, int* f)
+EBool dfs_visit(int i, AdjList* graph, int numVertices, EColor* color, int* parent, int* d, int* f)
 {
     // 静态变量Time，在多次调用间，保持storage duration
     static int Time = 0;
     // 确定i在有效范围内
-    adj_list pnode = graph[i];
+    AdjList pnode = graph[i];
     assert(i >= 0);
     color[i] = GRAY;
     d[i] = ++Time;
@@ -97,7 +99,7 @@ void print_edgetype(int start, int end, int type)
     }
     printf("%d -> %d %s\n", start, end, typename);
 }
-void set_edge_type(int start, adj_list pendnode, Color *color, int *d)
+void set_edge_type(int start, AdjList pendnode, EColor *color, int *d)
 {
     switch(color[pendnode->vertex])
     {

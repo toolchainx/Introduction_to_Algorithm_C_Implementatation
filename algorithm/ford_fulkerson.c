@@ -9,11 +9,11 @@
 
 // 假定graph和flow已分配内存
 // graph已初始化
-void initialize_edge_flow(adj_list* graph, int numVertices, AdjMat* flow)
+void initialize_edge_flow(AdjList* graph, int numVertices, AdjMat* flow)
 {
     int i;
     for (i = 0; i < numVertices; i++) {
-	adj_pnode x = graph[i];
+	AdjListNodePtr x = graph[i];
 	while (x) {
 	    flow->mat[i][x->vertex] = 0;
 	    flow->mat[x->vertex][i] = 0;
@@ -23,7 +23,7 @@ void initialize_edge_flow(adj_list* graph, int numVertices, AdjMat* flow)
 }
 // 该处path用栈来表示？
 // 使用make_stack来创建Stack
-EBool find_shortest_path(adj_list* graph, int numVertices, int s, int t, Stack path)
+EBool find_shortest_path(AdjList* graph, int numVertices, int s, int t, Stack path)
 {
     int *distance = (int *)malloc(numVertices * sizeof(int));
     int *parent = (int *)malloc(numVertices * sizeof(int));
@@ -71,7 +71,7 @@ void update_flow(AdjMat* f, Stack path, int cfp)
 }
 
 // 更新残留网络
-void update_residual_graph(adj_list* gQuote, int numVertices, AdjMat* c, AdjMat* f, Stack path)
+void update_residual_graph(AdjList* gQuote, int numVertices, AdjMat* c, AdjMat* f, Stack path)
 {
     // 如何更新？
     // 要更新一个残留网络，首先图要支持的功能是，增加一条边和减少一条边
@@ -109,12 +109,12 @@ void update_residual_graph(adj_list* gQuote, int numVertices, AdjMat* c, AdjMat*
 // graph和c已初始化完成
 // 问题：何时更新残留容量，直接计算，不存储?
 // c 表示的是图初始化时的容量，不是残留容量
-void ford_fulkerson(adj_list* gQuote, int numVertices, int s, int t, AdjMat* f, AdjMat* c)
+void ford_fulkerson(AdjList* gQuote, int numVertices, int s, int t, AdjMat* f, AdjMat* c)
 {
     Stack path = make_stack();
     int minResCap;
     //adj_list* gQuote = copy_adjlist(graph, numVertices);
-    adj_output(gQuote, numVertices);
+    print_adjlist(gQuote, numVertices);
     initialize_edge_flow(gQuote, numVertices, f);
     print_adjmat(f);
     // 循环无法终止
@@ -134,7 +134,7 @@ void ford_fulkerson(adj_list* gQuote, int numVertices, int s, int t, AdjMat* f, 
 	print_adjmat(f);
 	// 问题：如何从G生成Gf
 	update_residual_graph(gQuote, numVertices, c, f, path);
-	adj_output(gQuote, numVertices);
+	print_adjlist(gQuote, numVertices);
 	fflush(stdout);
     }
     //freeAdjList(gQuote, numVertices);

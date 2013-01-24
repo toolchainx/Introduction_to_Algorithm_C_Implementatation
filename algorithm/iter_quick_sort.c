@@ -52,7 +52,7 @@ int partition(int A[], int p, int r)
     swap(A, i+1, r);
     return i+1;
 }
-print(int A[], int length)
+print_arr(int A[], int length)
 {
     int i;
     for(i = 0; i < length; i++)
@@ -67,6 +67,6 @@ int main(void)
     int length = length(A);
     printf("the length of array A is: %d\n", length);
     quick_sort(A, 0, length - 1);
-    print(A, length);
+    print_arr(A, length);
 }
 

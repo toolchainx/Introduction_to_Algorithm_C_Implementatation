@@ -9,17 +9,20 @@
 
 ;; 检测名为filename.*的文件是否存在，(*代表任意的扩展名)
 (defun auto-c-files (filename template-filename)
+  "auto generate files named \"filename\" for C development"
+  (interactive "sEnter the file name sans extension: \nsEnter the template file name: ")
+  (message "File name: %s, template file name: %s" filename template-filename)
   (if (directory-files "." nil 
 		       (concat
 			filename "\..*")
 		       t)
-      (message "big already exists!")
+      (message "%s already exists!" filename)
     (if (file-exists-p template-filename)
 	(progn
 	  (dot-c-file filename)
 	  (dot-c-test-file filename)
-	  (dot-h-file filename)
-	  (dot-make-file filename template-filename)))))
+	  (dot-h-file filename))
+      (message "can't find the template file in current dir."))))
 (defun dot-c-file (filename)
   (let ((filename-ext (concat filename ".c")))
     (if (not (file-exists-p filename-ext))

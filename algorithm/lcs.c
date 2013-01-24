@@ -7,14 +7,14 @@
 
 int c[M][N]={{0}};
 
-typedef enum{GeneA,GeneC, GeneG, GeneT, GeneS} gene;
+typedef enum{GeneA,GeneC, GeneG, GeneT, GeneS} EGene;
 
 int geneTable[5][5] = {{5, -1, -2, -1, -3},
 		       {-1, 5, -3, -2, -4},
 		       {-2, -3, 5, -2, -2},
 		       {-1, -2, -2, 5, -1},
 		       {-3, -4, -2, -1, 0}};
-int maxSimilarity(int a, int b, int c)
+int max_similarity(int a, int b, int c)
 {
     if(a > b)
     {
@@ -37,7 +37,7 @@ int maxSimilarity(int a, int b, int c)
     }
 }
 
-int calcSimilarity(gene up, gene down)
+int calc_similarity(EGene up, EGene down)
 {
     /* if(up == GeneS && down == GeneS) */
     /* { */
@@ -47,7 +47,7 @@ int calcSimilarity(gene up, gene down)
     return geneTable[up][down];    
 }
 // X 和 Y 从 1开始计算
-int lcs_similarity(gene *X, gene *Y, int lengthX, int lengthY)
+int lcs_similarity(EGene *X, EGene *Y, int lengthX, int lengthY)
 {
     int m = lengthX;
     int n = lengthY;
@@ -59,7 +59,7 @@ int lcs_similarity(gene *X, gene *Y, int lengthX, int lengthY)
 	c[i][0] = 0;
 	for(k = 1; k <= i; k++)
 	{
-	    c[i][0] += calcSimilarity(X[k], GeneS);
+	    c[i][0] += calc_similarity(X[k], GeneS);
 	}
     }
     for(j = 1; j <= n; j++)
@@ -68,22 +68,22 @@ int lcs_similarity(gene *X, gene *Y, int lengthX, int lengthY)
 	int k;
 	for(k = 1; k <= j; k++)
 	{
-	    c[0][j] += calcSimilarity(GeneS, Y[k]);
+	    c[0][j] += calc_similarity(GeneS, Y[k]);
 	}
     }
     for(i = 1; i <= m; i++)
     {
 	for(j = 1; j <= n; j++)
 	{
-	    c[i][j] = maxSimilarity(c[i][j-1] + calcSimilarity(GeneS, Y[j]),
-				    c[i-1][j] + calcSimilarity(X[i], GeneS),
-				    c[i-1][j-1] + calcSimilarity(X[i], Y[j]));
+	    c[i][j] = max_similarity(c[i][j-1] + calc_similarity(GeneS, Y[j]),
+				    c[i-1][j] + calc_similarity(X[i], GeneS),
+				    c[i-1][j-1] + calc_similarity(X[i], Y[j]));
 
 	}    
     }
     return c[m][n];
 }
-void charToGene(char cArray[], gene gArray[], int length)
+void char_to_gene(char cArray[], EGene gArray[], int length)
 {
     int i;
     for(i =0; i <length; i++)
@@ -105,7 +105,7 @@ void charToGene(char cArray[], gene gArray[], int length)
 	}
     }
 }
-void print(gene *gArray, int length)
+void print_arr(EGene *gArray, int length)
 {
     int i;
     for(i = 0; i < length; i++)
@@ -126,7 +126,7 @@ void printc(int cArray[M][N], int m, int n)
 int main()
 {
     int numCases;
-    gene X[102], Y[102];
+    EGene X[102], Y[102];
     char cX[102], cY[102];
     int lenX, lenY;
     int countCase;
@@ -139,8 +139,8 @@ int main()
 	int maxResemblance;
 	scanf("%d %s", &lenX, cX);
 	scanf("%d %s", &lenY, cY);
-	charToGene(cX, X, lenX);
-	charToGene(cY, Y, lenY);
+	char_to_gene(cX, X, lenX);
+	char_to_gene(cY, Y, lenY);
 	// print(X, lenX+1);
 	// print(Y, lenY+1);
 	// fflush(stdout);

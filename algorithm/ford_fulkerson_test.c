@@ -4,7 +4,7 @@ int main(int argc, char *argv[])
 {
     FILE *pFile, *pCapFile;
     int s, t, numVertices;
-    adj_list* g = NULL;
+    AdjList* g = NULL;
     AdjMat *f, *c;
     if (argc != 5)
     {
@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
     }
     // 构建不带权重的图
-    g = construct_adj_list(argv[1], g, &numVertices);
-    adj_output(g, numVertices);
+    g = construct_adjlist(argv[1], g, &numVertices);
+    print_adjlist(g, numVertices);
     c = construct_param_adjmat(pCapFile, 0, 0);
     print_adjmat(c);
     f = make_param_adjmat(numVertices, 0, 0);
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     print_adjmat(f);
     free_adjmat(f);
     free_adjmat(c);
-    freeAdjList(g, numVertices);
+    free_adjlist(g, numVertices);
 
     return 0;
 }

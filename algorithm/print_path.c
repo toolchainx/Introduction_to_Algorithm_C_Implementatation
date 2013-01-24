@@ -1,15 +1,15 @@
 #include "print_path.h"
 
-void print(int point)
+void print_arr(int point)
 {
     printf("%d ", point);
 }
 // 打印两点间的最短路径所经过的中间点
-void print_path(adj_list* graph, int* parent, int start, int end)
+void print_path(AdjList* graph, int* parent, int start, int end)
 {
     if (start == end)
     {
-	print(start);
+	print_arr(start);
     }
     else if (parent[end] == NILVALUE)
     {
@@ -18,6 +18,6 @@ void print_path(adj_list* graph, int* parent, int start, int end)
     else
     {
 	print_path(graph, parent, start, parent[end]);
-	print(end);
+	print_arr(end);
     }
 }

@@ -12,16 +12,16 @@
 #include "disjoint_set_forest.h"
 
 // 创建一个结点
-TreePNode djsforest_make_node(int k)
+DjsTreeNodePtr djsforest_make_node(int k)
 {
-    TreePNode x = (TreePNode)malloc(sizeof(*x));
+    DjsTreeNodePtr x = (DjsTreeNodePtr)malloc(sizeof(*x));
     x->key = k;
     x->parent = NIL;
     return x;
 }
 
 // 创建一个集合
-Tree djsforest_make_set(TreePNode x)
+DjsTree djsforest_make_set(DjsTreeNodePtr x)
 {
     x->rank = 0;
     x->parent = x;
@@ -29,7 +29,7 @@ Tree djsforest_make_set(TreePNode x)
 }
 
 // 寻找该结点所在集合的代表
-TreePNode djsforest_find_set(TreePNode x)
+DjsTreeNodePtr djsforest_find_set(DjsTreeNodePtr x)
 {
     // 实现路径压缩的功能
     if (x != x->parent)
@@ -40,7 +40,7 @@ TreePNode djsforest_find_set(TreePNode x)
     return x->parent;
 }
 // 链接两棵有根树
-Tree djsforest_link(TreePNode rep1, TreePNode rep2)
+DjsTree djsforest_link(DjsTreeNodePtr rep1, DjsTreeNodePtr rep2)
 {
     if (rep1->rank > rep2->rank )
     {
@@ -59,7 +59,7 @@ Tree djsforest_link(TreePNode rep1, TreePNode rep2)
 }
 
 // 合并两个结点所在地集合
-Tree djsforest_union(TreePNode x, TreePNode y)
+DjsTree djsforest_union(DjsTreeNodePtr x, DjsTreeNodePtr y)
 {
     return djsforest_link(djsforest_find_set(x), djsforest_find_set(y));
 }

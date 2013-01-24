@@ -8,14 +8,14 @@ typedef struct tag_queue
     int head;
     int tail;
     int array[QSIZE];
-}queue;
+}Queue;
 
 // 入队操作
-int enqueue(queue* q, int value);
+int enqueue(Queue* q, int value);
 
 // 出队操作
-int dequeue(queue* q, int* pvalue);
+int dequeue(Queue* q, int* pvalue);
 
 // 打印队列中的成员
-void printQueue(queue* q);
+void printQueue(Queue* q);
 #endif /* _QUEUE_H_ */

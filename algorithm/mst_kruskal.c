@@ -28,12 +28,12 @@ typedef struct tagEdge
 {
     int startPointIndex;
     int endPointIndex;
-}Edge;
+}EEdge;
 
 // 图的表示方法，利用邻接矩阵来表示图，也就是二维数组
 #define NUMVERTICES 9
 
-int calcEdge(int g[NUMVERTICES][NUMVERTICES], int cntVertices,  Edge* edge)
+int calcEdge(int g[NUMVERTICES][NUMVERTICES], int cntVertices,  EEdge* edge)
 {
     int i, j, edgeNum = 0;
     // 避免一条边的两个方向都计算
@@ -54,7 +54,7 @@ int calcEdge(int g[NUMVERTICES][NUMVERTICES], int cntVertices,  Edge* edge)
     return edgeNum;
 }
 
-void edge_print(Edge* edge, int cntEdges)
+void edge_print(EEdge* edge, int cntEdges)
 {
     int i;
     for (i = 0; i < cntEdges; i++) {
@@ -66,9 +66,9 @@ void edge_print(Edge* edge, int cntEdges)
 }
 
 
-void swapEdge(Edge* edge, int i, int j)
+void swapEdge(EEdge* edge, int i, int j)
 {
-    Edge tmp;
+    EEdge tmp;
     tmp.startPointIndex = edge[i].startPointIndex;
     tmp.endPointIndex = edge[i].endPointIndex;
     edge[i].startPointIndex = edge[j].startPointIndex;
@@ -77,7 +77,7 @@ void swapEdge(Edge* edge, int i, int j)
     edge[j].endPointIndex = tmp.endPointIndex;
 }
 // 对所有的边，按权重进行排序，根据给定的函数进行排序
-void sortEdge(Edge edge[], int cntEdges, int g[NUMVERTICES][NUMVERTICES])
+void sortEdge(EEdge edge[], int cntEdges, int g[NUMVERTICES][NUMVERTICES])
 {
     // 简单选择排序
     int i, j;
@@ -99,17 +99,17 @@ void mst_kruskal(int g[NUMVERTICES][NUMVERTICES], int cntVertices)
 {
     int i;
     int cntEdges, newCntEdges;
-    Edge *edge;
+    EEdge *edge;
     // 如何分配内存？
     // 计算要分配的数量，然后再分配，还是一个一个的分配？
     cntEdges = calcEdge(g, cntVertices, NULL);
-    edge = (Edge*)malloc(cntEdges * sizeof(Edge));
+    edge = (EEdge*)malloc(cntEdges * sizeof(EEdge));
     newCntEdges = calcEdge(g, cntVertices, edge);
     printf("before sort\n");
     edge_print(edge, cntEdges);
     assert(newCntEdges == cntEdges);
     // 保存结点指针的数组
-    TreePNode nodeArray[NUMVERTICES];
+    DjsTreeNodePtr nodeArray[NUMVERTICES];
     for (i = 0; i < cntVertices; i++) {
 	nodeArray[i] = djsforest_make_node(i);
 	djsforest_make_set(nodeArray[i]);

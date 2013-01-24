@@ -6,13 +6,13 @@
 
 // 源点到其他各顶点的距离为0
 // 返回source顶点的索引
-adj_list* add_source_vertex(adj_list* graph, int numVertices, int* sIdx)
+AdjList* add_source_vertex(AdjList* graph, int numVertices, int* sIdx)
 {
     int i;
-    adj_list* gQuote = copy_adjlist(graph, numVertices);
-    adj_output(gQuote, numVertices);
+    AdjList* gQuote = copy_adjlist(graph, numVertices);
+    print_adjlist(gQuote, numVertices);
     // realloc分配的内存，一定要记住清零
-    gQuote = (adj_list *)realloc(gQuote, (numVertices + 1)* sizeof(adj_list));
+    gQuote = (AdjList *)realloc(gQuote, (numVertices + 1)* sizeof(AdjList));
     gQuote[numVertices] = NULL;
     if (gQuote == NULL)
     {
@@ -26,10 +26,10 @@ adj_list* add_source_vertex(adj_list* graph, int numVertices, int* sIdx)
     return gQuote;    
 }
 
-AdjMat* johnson(adj_list* graph, int numVertices)
+AdjMat* johnson(AdjList* graph, int numVertices)
 {
     int u, v;
-    adj_list* gQuote;
+    AdjList* gQuote;
     int sIdx;
     int *h, *parent, *dQuote, *parentQuote;
     AdjMat* dMat = make_adjmat(numVertices);
@@ -38,7 +38,7 @@ AdjMat* johnson(adj_list* graph, int numVertices)
     dQuote = (int *)malloc((numVertices + 1) * sizeof(int));
     parentQuote = (int *)malloc((numVertices + 1) * sizeof(int));
     gQuote =  add_source_vertex(graph, numVertices, &sIdx);
-    adj_output(gQuote, numVertices + 1);
+    print_adjlist(gQuote, numVertices + 1);
 #ifdef DEBUG
     printf("johnson started\n");
     fflush(stdout);
@@ -54,7 +54,7 @@ AdjMat* johnson(adj_list* graph, int numVertices)
 	// 设计一个遍历函数和一个对每个遍历的结点进行修改的函数？
 	int i;
 	for (i = 0; i < numVertices+1; i++) {
-	    adj_pnode x = gQuote[i];
+	    AdjListNodePtr x = gQuote[i];
 	    while (x) {
 		x->weight = x->weight + h[i] - h[x->vertex];
 		x = x->next;
@@ -73,7 +73,7 @@ AdjMat* johnson(adj_list* graph, int numVertices)
     free(parent);
     free(dQuote);
     free(parentQuote);
-    freeAdjList(gQuote, numVertices + 1);
+    free_adjlist(gQuote, numVertices + 1);
     // remember to free the dMat outside the function.
 #ifdef DEBUG
     printf("johnson finished\n");

@@ -4,14 +4,14 @@
 #include <stdlib.h>
 #include <assert.h>
 
-typedef enum { RED, BLACK } Color;
+typedef enum { RED, BLACK } EColor;
 typedef struct tag_rbtree
 {
   struct tag_rbtree* left;
   struct tag_rbtree* right;
   struct tag_rbtree* parent;
   int key;
-  Color color;
+  EColor color;
 }rbtree, *prbtree, *prbt_node, rbt_node;
 
 // 定义一个哑元

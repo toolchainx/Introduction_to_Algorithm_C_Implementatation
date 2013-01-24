@@ -9,20 +9,20 @@ typedef struct tagTreeNode
     int key;
     // rank is the height of the node
     int rank;
-}TreeNode, *Tree, *TreePNode;
+}DjsTreeNode, *DjsTree, *DjsTreeNodePtr;
 
 // 创建一个结点
-TreePNode djsforest_make_node(int k);
+DjsTreeNodePtr djsforest_make_node(int k);
 // 创建一个结点
-TreePNode djsforest_make_node(int k);
+DjsTreeNodePtr djsforest_make_node(int k);
 // 创建一个集合
-Tree djsforest_make_set(TreePNode x);
+DjsTree djsforest_make_set(DjsTreeNodePtr x);
 // 寻找该结点所在集合的代表
-TreePNode djsforest_find_set(TreePNode x);
+DjsTreeNodePtr djsforest_find_set(DjsTreeNodePtr x);
 // 链接两棵有根树
-Tree djsforest_link(TreePNode rep1, TreePNode rep2);
+DjsTree djsforest_link(DjsTreeNodePtr rep1, DjsTreeNodePtr rep2);
 // 合并两个结点所在地集合
-Tree djsforest_union(TreePNode x, TreePNode y);
+DjsTree djsforest_union(DjsTreeNodePtr x, DjsTreeNodePtr y);
 
 #endif /* _DISJOINT_SET_FOREST_H_ */
 

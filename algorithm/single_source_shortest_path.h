@@ -20,7 +20,7 @@
 // 假定邻接链表已分配好，长度给定
 // 根据DRY原则，是否要去掉length参数
 // 通过遍历graph来获得graph的长度呢？
-void initialize_single_source(adj_list* graph, int length, int s, 
+void initialize_single_source(AdjList* graph, int length, int s, 
 			      int d[], int parent[]);
 
 // 实现松弛函数
@@ -30,5 +30,5 @@ void relax(int u, int v, int w, int d[], int parent[]);
 // Bellman-Ford 算法
 
 // 假定graph, d[], parent[]均已分配好
-EBool bellman_ford(adj_list* graph, int length, int s, int d[], int parent[]);
+EBool bellman_ford(AdjList* graph, int length, int s, int d[], int parent[]);
 

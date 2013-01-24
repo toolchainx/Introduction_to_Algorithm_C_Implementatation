@@ -16,7 +16,7 @@
 // 假定邻接链表已分配好，长度给定
 // 根据DRY原则，是否要去掉length参数
 // 通过遍历graph来获得graph的长度呢？
-void initialize_single_source(adj_list* graph, int length, int s, 
+void initialize_single_source(AdjList* graph, int length, int s, 
 			      int d[], int parent[])
 {
     int i;
@@ -41,7 +41,7 @@ void relax(int u, int v, int w, int d[], int parent[])
 // Bellman-Ford 算法
 
 // 假定graph, d[], parent[]均已分配好
-EBool bellman_ford(adj_list* graph, int length, int s, int d[], int parent[])
+EBool bellman_ford(AdjList* graph, int length, int s, int d[], int parent[])
 {
     int i, m;
     initialize_single_source(graph, length, s, d, parent);
@@ -49,7 +49,7 @@ EBool bellman_ford(adj_list* graph, int length, int s, int d[], int parent[])
 	// 遍历每条边，对每条边进行松弛
 	int j;
 	for (j = 0; j < length; j++) {
-	    adj_pnode x = graph[j];
+	    AdjListNodePtr x = graph[j];
 	    while (x) {
 		relax(j, x->vertex, x->weight, d, parent);
 		x = x->next;
@@ -58,7 +58,7 @@ EBool bellman_ford(adj_list* graph, int length, int s, int d[], int parent[])
     }
     // 测试是否有负权回路
     for (m = 0; m < length; m++) {
-	adj_pnode x = graph[m];
+	AdjListNodePtr x = graph[m];
 	while(x) {
 	    if (d[x->vertex] > d[m] + x->weight)
 	    {
