@@ -62,24 +62,29 @@
      * 堆排序		    `heap_sort`
      * 快速排序		    `quick_sort` `rand_quick_sort`
      * 索引排序		    `sort_arr_idx`
+  2. 线性时间排序(待补充)
+  3. 中位数和顺序统计学
      * 期望线性时间选择   `randomized_select` 
-  2. 基本数据结构
+  4. 基本数据结构
      * 栈		`stack`
      * 队列		`queue`
      * 链表		`list`
      * 邻接链表		`adj_table`
      * 邻接矩阵		`adj_mat`
-  3. 树
+  5. 散列表(待补充)
+  6. 树
      * 二叉查找树	`bst`
      * 红黑树     	`rbtree`
-  4. 堆
+     * B树(待补充)
+  7. 堆
      * 二项堆		`binomial_heap`
      * Fibonacci堆	`fib_heap`
-  5. 动态规划
+  8. 用于不相交集合的数据结构(待补充)
+  9. 动态规划
      * 0-1 背包问题	`knapsack`
      * 最长公共子序列	`lcs`
-  6. 贪心算法(待补充)
-  7. 图算法
+  10. 贪心算法(待补充)
+  11. 图算法
      * 广度优先搜索	`bfs`
      * 深度优先搜索	`dfs`
      * 拓扑排序		`toplogical_sort`
