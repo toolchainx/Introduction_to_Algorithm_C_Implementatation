@@ -1,17 +1,17 @@
-# �����㷨���۵ڶ���α�����C����ʵ��
+# 包含算法导论第二版伪代码的C语言实现
 
-## ˵��һ
-ÿ���㷨����3���ļ�����`XXX.h` `XXX.c` `XXX_test.c` �ļ���`XXX`Ϊ�㷨�����ƣ�`XXX_test.c` Ϊ�����㷨��Ч�Ե��ļ�����main�������ڵ��ļ���makefileΪgeneric.mk��makefile.sub��ʹ��`auto-c-files.el`(Emacs-Lisp����)��������3���ļ���������Ӧ��ģ�塣
+## 说明一
+每个算法包含3个文件，即`XXX.h` `XXX.c` `XXX_test.c` 文件，`XXX`为算法的名称，`XXX_test.c` 为测试算法有效性的文件，即main函数所在的文件。makefile为generic.mk及makefile.sub。使用`auto-c-files.el`(Emacs-Lisp代码)来生成这3个文件并载入相应的模板。
 
-## ˵����
-ͼ��ʵ��Ϊ�ڽ����������ڽӾ����ڶ�ͼ���в���ʱ��ʹ�õ����������ʽ���£�
-### �ڽ�����(�����������ļ�`adj_table.dat`Ϊ��)
+## 说明二
+图的实现为邻接链表或者邻接矩阵。在对图进行测试时，使用的数据输入格式如下：
+### 邻接链表(以数据输入文件`adj_table.dat`为例)
 
-      // �������������0��ʼ����������
-      0  // ͼ�������������������ʾ
-      2  // ��һ����ʾ�Ķ���ĳ���
-      1 4  // ����������ʾ�Ķ���ΪԴ�㣬��֮�������ڽӶ���
-      1    // �ڶ������������
+      // 顶点的索引均从0开始，连续索引
+      0  // 图顶点的索引，用整数表示
+      2  // 上一行所示的顶点的出度
+      1 4  // 以上两行所示的顶点为源点，与之相连的邻接顶点
+      1    // 第二个顶点的索引
       4
       0 2 3 4
       2
@@ -22,9 +22,9 @@
       1 2 4
       4
       3
-      0 1 3 // �ļ������һ��������ֹ������û�л��з�
+      0 1 3 // 文件在最后一个数据终止，该行没有换行符
 
-      ����print_adjlist()����Ľ��Ϊ��
+      函数print_adjlist()输出的结果为：
 
       5
       0 -> 1, weight: 0; 0 -> 4, weight: 0; 
@@ -33,9 +33,9 @@
       3 -> 1, weight: 0; 3 -> 4, weight: 0; 3 -> 2, weight: 0; 
       4 -> 0, weight: 0; 4 -> 3, weight: 0; 4 -> 1, weight: 0;
 
-### �ڽӾ���(�����������ļ�`all_pair_shortest_path.dat`Ϊ��)
+### 邻接矩阵(以数据输入文件`all_pair_shortest_path.dat`为例)
 
-      5  // ����ĸ�������������Ϊ��0��ʼ�������������˴�Ϊ0~4
+      5  // 顶点的个数，顶点索引为从0开始的连续索引，此处为0~4
       0 1 3  // edge: 0 -> 1 weight: 3
       0 2 8  // edge: 0 -> 2 weight: 8
       0 4 -4 // etc ...
@@ -44,8 +44,8 @@
       2 1 4
       3 0 2
       3 2 -5
-      4 3 6 // �ļ������һ��������ֹ������û�л��з�
-      ����print_adjmat()���Ϊ��
+      4 3 6 // 文件在最后一个数据终止，该行没有换行符
+      函数print_adjmat()输出为：
 
       adj_mat_test all_pair_shortest_path.dat 
       |0   3   8   INF -4  |
@@ -54,38 +54,39 @@
       |2   INF -5  0   INF |
       |INF INF INF 6   0   |
 
-## ˵����
-���㷨���۵ڶ��������α���벢û����ȫʵ�֣�û�ж���ϰ��Ĵ𰸽��д���ʵ�֡����뻹�кܶ�Ľ��ĵط�����һ�µ�����Լ����һ�µĺ����ӿڣ���ƵĹ淶�Եȵȡ���Щ�������ں����ĸĶ������ܱ��벻��ͨ����������ʱ����һ���Ľ�����������Emacs for Windows + MinGW + GCC����Դ�����ѧϰ����֮�ã�����������Ŀ�ģ�ά���߸Ų����𡣻�ӭ��Դ������Ȥ��ͬѧ��������:).
+## 说明三
+对算法导论第二版里面的伪代码并没有完全实现，没有对练习题的答案进行代码实现。代码还有很多改进的地方，如一致的命名约定，一致的函数接口，设计的规范性等等。有些代码由于后来的改动，可能编译不能通过，将来有时间会进一步改进。开发环境Emacs for Windows + MinGW + GCC，该源码仅供学习讨论之用，如用于其它目的，维护者概不负责。欢迎对源码有兴趣的同学进行讨论:).
 ***
-# �㷨����
-  1. �����㷨
-     * ������		`heap_sort`
-     * ��������		`quick_sort`
-     * ��������		`sort_arr_idx`
-  2. �������ݽṹ
-     * ջ		`stack`
-     * ����		`queue`
-     * ����		`list`
-     * �ڽ�����		`adj_table`
-     * �ڽӾ���		`adj_mat`
-  3. ��
-     * ���������	`bst`
-     * �����     	`rbtree`
-  4. ��
-     * �����		`binomial_heap`
-     * Fibonacci��	`fib_heap`
-  5. ��̬�滮
-     * 0-1 ��������	`knapsack`
-     * �����������	`lcs`
-  6. ̰���㷨(������)
-  7. ͼ�㷨
-     * �����������	`bfs`
-     * �����������	`dfs`
-     * ��������		`toplogical_sort`
-     * ǿ��ͨ��֧	`scc`
-     * ��С������	`mst_prim`, `mst_kruskal`
-     * ��Դ���·��	`single_source_shortest_path` `bellman_ford`, `dijkstra`
-     * ÿ�Զ�������·��	`all_pair_shortest_path`, `floyd_warshall`, `johnson`
-     * ����ͼ�Ĵ��ݱհ�	`transitive_closure`    
-     * �����		`ford_fulkerson`
+# 算法分类
+  1. 排序算法
+     * 堆排序		    `heap_sort`
+     * 快速排序		    `quick_sort` `rand_quick_sort`
+     * 索引排序		    `sort_arr_idx`
+     * 期望线性时间选择   `randomized_select` 
+  2. 基本数据结构
+     * 栈		`stack`
+     * 队列		`queue`
+     * 链表		`list`
+     * 邻接链表		`adj_table`
+     * 邻接矩阵		`adj_mat`
+  3. 树
+     * 二叉查找树	`bst`
+     * 红黑树     	`rbtree`
+  4. 堆
+     * 二项堆		`binomial_heap`
+     * Fibonacci堆	`fib_heap`
+  5. 动态规划
+     * 0-1 背包问题	`knapsack`
+     * 最长公共子序列	`lcs`
+  6. 贪心算法(待补充)
+  7. 图算法
+     * 广度优先搜索	`bfs`
+     * 深度优先搜索	`dfs`
+     * 拓扑排序		`toplogical_sort`
+     * 强连通分支	`scc`
+     * 最小生成树	`mst_prim`, `mst_kruskal`
+     * 单源最短路径	`single_source_shortest_path` `bellman_ford`, `dijkstra`
+     * 每对顶点间最短路径	`all_pair_shortest_path`, `floyd_warshall`, `johnson`
+     * 有向图的传递闭包	`transitive_closure`    
+     * 最大流		`ford_fulkerson`
       
