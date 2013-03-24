@@ -1,7 +1,9 @@
 //快速排序算法，递归实现
 #include <stdio.h>
+#include <stdlib.h>
 
 int partition(int A[], int p, int r);
+void print_arr(int A[], int length);
 
 static void swap(int A[], int i, int j)
 {
@@ -26,6 +28,7 @@ int partition(int A[], int p, int r)
 {
     int x;
     int i,j;
+    // x is the pivot
     x = A[r];
     i = p -1;
     for (j = p; j <= r-1; j++)
@@ -36,7 +39,10 @@ int partition(int A[], int p, int r)
 	    swap(A, i, j);
 	}
     }
+    // the A[i+1] >= x = A[r]
     swap(A, i+1, r);
+    print_arr(A, r-p+1);
+//    exit(EXIT_FAILURE);
     return i+1;
 }
 void print_arr(int A[], int length)
