@@ -9,4 +9,5 @@ int main(void)
     rand_quick_sort(A, 0, length - 1);
     array_print(A, length);
     return 0;
+    
 }

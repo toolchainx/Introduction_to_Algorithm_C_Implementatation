@@ -3,3 +3,6 @@
 *.exe
 *.gdb_history
 *.gitignore
+GTAGS
+GRTAGS
+GPATH

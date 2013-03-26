@@ -29,3 +29,7 @@ void rand_quick_sort(int A[], int p, int r)
 }
 
 
+void test()
+{
+    
+}

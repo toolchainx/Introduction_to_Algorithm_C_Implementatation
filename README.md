@@ -71,7 +71,10 @@
      * 链表		`list`
      * 邻接链表		`adj_table`
      * 邻接矩阵		`adj_mat`
-  5. 散列表(待补充)
+  5. 散列表
+     * 直接寻址表    `direct_address_hash`
+     * 散列表       `chained_hash`
+     * 开放寻址法(线性探查)    `open_address_linear_hash`
   6. 树
      * 二叉查找树	`bst`
      * 红黑树     	`rbtree`
