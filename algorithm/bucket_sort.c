@@ -42,34 +42,30 @@ static BNode* insert_sort(BNode* l)
     BNode* lsort = NULL;
     while(l != NULL)
     {
+	BNode* x = l;
+	l = l->next;
+	x->next = NULL;
 	BNode* pb_before = NULL;
 	BNode* pb = lsort;
-	while(pb != NULL)
+	while(pb != NULL && x->key >= pb->key)
 	{
-	    if (l->key < pb->key)
-	    {
-		// insert l before pb
-		BNode* x = l;
-		l = l->next;
-		x->next = pb;
-		if (pb_before == NULL)
-		{
-		    lsort = x;
-		}
-		else
-		{
-		    pb_before->next = x;
-		}
-		break;
-	    }
 	    pb_before = pb;
 	    pb = pb->next;
 	}
 	if (pb == NULL)
 	{
-	    BNode* x = l;
-	    l = l->next;
-	    x->next = NULL;
+	    if (pb_before != NULL)
+	    {
+		pb_before->next = x;
+	    }
+	    else
+	    {
+		lsort = x;
+	    }
+	}
+	else
+	{
+	    x->next = pb;
 	    if (pb_before != NULL)
 	    {
 		pb_before->next = x;
