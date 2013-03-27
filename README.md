@@ -62,7 +62,10 @@
      * 堆排序		    `heap_sort`
      * 快速排序		    `quick_sort` `rand_quick_sort`
      * 索引排序		    `sort_arr_idx`
-  2. 线性时间排序(待补充)
+  2. 线性时间排序
+  	 * 计数排序          `counting_sort`
+  	 * 基数排序	        `radix_sort`
+  	 * 桶排序	        `bucket_sort`
   3. 中位数和顺序统计学
      * 期望线性时间选择   `randomized_select` 
   4. 基本数据结构

@@ -36,7 +36,9 @@ rand_quick_sort_test\
 direct_address_hash_test\
 chained_hash_test\
 open_address_linear_hash_test\
-
+counting_sort_test\
+radix_sort_test\
+bucket_sort_test\
 
 # 待修改的文件: scc 
 CLEANTARGETS=$(TARGETS:=_clean)
