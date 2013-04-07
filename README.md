@@ -91,8 +91,8 @@
      * 最长公共子序列	`lcs`
      * 活动选择问题   `dp_activity_selector`
   10. 贪心算法
-     * 活动选择问题(递归) `recursive activity select`
-     * 活动选择问题(迭代) `greedy activity select` 
+     * 活动选择问题(递归) `recursive_activity_select`
+     * 活动选择问题(迭代) `greedy_activity_select` 
   11. 图算法
      * 广度优先搜索	`bfs`
      * 深度优先搜索	`dfs`
