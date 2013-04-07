@@ -89,7 +89,10 @@
   9. 动态规划
      * 0-1 背包问题	`knapsack`
      * 最长公共子序列	`lcs`
-  10. 贪心算法(待补充)
+     * 活动选择问题   `dp_activity_selector`
+  10. 贪心算法
+     * 活动选择问题(递归) `recursive activity select`
+     * 活动选择问题(迭代) `greedy activity select` 
   11. 图算法
      * 广度优先搜索	`bfs`
      * 深度优先搜索	`dfs`
