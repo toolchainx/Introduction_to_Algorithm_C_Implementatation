@@ -71,6 +71,7 @@
   4. 基本数据结构
      * 栈		`stack`
      * 队列		`queue`
+     * 优先级队列 `min_priority_queue`
      * 链表		`list`
      * 邻接链表		`adj_table`
      * 邻接矩阵		`adj_mat`
@@ -85,7 +86,9 @@
   7. 堆
      * 二项堆		`binomial_heap`
      * Fibonacci堆	`fib_heap`
-  8. 用于不相交集合的数据结构(待补充)
+  8. 用于不相交集合的数据结构
+  	 * 不相交集合链表 `disjoint_set_link`
+  	 * 不相交集合森林 `disjoint_set_forest`
   9. 动态规划
      * 0-1 背包问题	`knapsack`
      * 最长公共子序列	`lcs`
@@ -93,6 +96,7 @@
   10. 贪心算法
      * 活动选择问题(递归) `recursive_activity_select`
      * 活动选择问题(迭代) `greedy_activity_select` 
+     * huffman编码       `huffman_coding`
   11. 图算法
      * 广度优先搜索	`bfs`
      * 深度优先搜索	`dfs`

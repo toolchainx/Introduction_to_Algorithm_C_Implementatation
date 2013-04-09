@@ -39,6 +39,11 @@ open_address_linear_hash_test\
 counting_sort_test\
 radix_sort_test\
 bucket_sort_test\
+dp_activity_selector_test\
+recursive_activity_select_test\
+greedy_activity_select_test\
+min_priority_queue_test\
+huffman_coding_test\
 
 # 待修改的文件: scc 
 CLEANTARGETS=$(TARGETS:=_clean)
