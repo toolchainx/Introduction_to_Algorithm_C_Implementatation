@@ -1,41 +1,75 @@
-// 链表实现
-// 实现栈的数据结构
-#include "stack.h"
-#include <stdio.h>
-#include <stdlib.h>
+include<stdio.h>
+#include<stdlib.h>
+#define max 6
+int a[max], top=-1, i;
+void push();
+void pop();
+void display();
 
-Stack make_stack()
+void push()
 {
-    Stack stack = (Stack)malloc(sizeof(*stack));
-    stack->next = NULL;
-    return (Stack)stack;
-}
-
-void push(Stack s, int value)
-{
-    PNode pn = (PNode)malloc(sizeof(*pn));
-    pn->value = value;
-    pn->next = s->next;
-    s->next = pn;
-}
-
-EBool pop(Stack s, int* pv)
-{
-    
-    if (s->next != NULL)
+    int num;
+    if(top == max - 1)
     {
-	List x = s->next;
-	*pv = x->value;
-	s->next = s->next->next;
-	free(x);
-	return TRUE;
+        printf("\nThe stack is full");
     }
     else
     {
-	return FALSE;
+        printf("\nEnter the element: ");
+        scanf("%d",&num);
+        top++;
+        a[top] = num;
     }
 }
-void print_stack(Stack s)
+
+void pop()
 {
-    print_list(s->next);
+    if(top == -1)
+    {
+        printf("\nThe stack is empty");
+    }
+    else
+    {
+        printf("The delete number is : %d", a[top]);
+        top--;
+    }
+}
+
+void display()
+{
+    if(top == -1)
+    {
+        printf("\nThe stack is empty");
+    }
+    else
+    {
+        printf("\nThe elements are: ");
+        for (i = top; i>=0; i--)
+        {
+            printf("\t%d", a[i]);
+        }
+    }
+}
+
+int main()
+{
+    int choice;
+    while(1)
+    {
+        printf("\n1.push\n2.pop\n3.display");
+        printf("\nEnter your choice: ");
+        scanf("%d",&choice);
+        switch (choice)
+        {
+        case 1:push();
+            break;
+        case 2:pop();
+            break;
+        case 3:display();
+            break;
+        case 4:exit(0);
+        default:printf("Wrong choice");
+        }
+    }
+    
 }

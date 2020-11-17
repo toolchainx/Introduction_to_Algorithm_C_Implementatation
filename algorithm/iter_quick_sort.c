@@ -1,72 +1,61 @@
-//快速排序算法，迭代实现 （未完成）
-#include <stdio.h>
-
-#define length(array) (sizeof(array)/sizeof(array[0]))
-
-void swap(int A[], int i, int j)
+#include<stdio.h>
+void quicksort(int a[10], int left, int right);
+int partition(int a[10], int left, int right);
+void quicksort(int a[10], int left,int right)
 {
-    int t = A[i];
-    A[i] = A[j];
-    A[j] = t;
-}
-
-void quick_sort(int A[], int p, int r)
-{
-    int q;
-    if(p >= r)
+    int j;
+    if(left<right)
     {
-	return;
-    }
-    q = partition(A, p, r);
-    quick_sort(A, p, q-1);
-    quick_sort(A, q+1, r);
-}
+        j = partition(a, left, right);
+        quicksort(a, left, j-1);
+        quicksort(a, j+1, right);
 
-void quick_sort(int A[], int p, int r)
-{
-    int q, pnext, rnext;
-    pnext = p; 
-    rnext = r;
-    while(pnext < rnext)
-    {
-	q = partition(A, pnext, rnext);
-	pnext = q
-	
     }
 }
 
-int partition(int A[], int p, int r)
+int partition(int a[10], int left, int right)
 {
-    int x;
-    int i,j;
-    x = A[r];
-    i = p -1;
-    for (j = p; j <= r-1; j++)
+    int temp, pivot, i, j;
+    pivot = left;
+    i = left;
+    j = right;
+    while(i<j)
     {
-	if (A[j] <= x)
-	{
-	    i++;
-	    swap(A, i, j);
-	}
+        while((a[i]<=a[pivot]) && (i<right))
+        {
+            i++;
+        }
+        while(a[j]>a[pivot])
+        {
+            j--;
+        }
+        if(i<j)
+        {
+            temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
     }
-    swap(A, i+1, r);
-    return i+1;
-}
-print_arr(int A[], int length)
-{
-    int i;
-    for(i = 0; i < length; i++)
-    {
-	printf("%3d\n", A[i]);
-    }
+
+    temp = a[pivot];
+    a[pivot] = a[j];
+    a[j] = temp;
+    return j;
 }
 
-int main(void)
+int main()
 {
-    int A[] = {1, 3, 5, 2, 9, 100, 6, 7, 10, 11,11,1, 3,2, 97};
-    int length = length(A);
-    printf("the length of array A is: %d\n", length);
-    quick_sort(A, 0, length - 1);
-    print_arr(A, length);
+    int a[10], n, i, j;
+    printf("\nEnter the size of the array: ");
+    scanf("%d", &n);
+    printf("\nEnter the array elements: ");
+    for(i=0; i<n; i++)
+    {
+        scanf("%d", &a[i]);
+    }   
+    quicksort(a, 0, n-1);
+    printf("\nThe array after sorting:");
+    for(i=0; i<n; i++)
+    printf("\t%d",a[i]);
+    printf("\n\n");
 }
-
